@@ -33,6 +33,7 @@ export function useExpensesStorage() {
     
     return total.toLocaleString();
   });
+  
 
   const saveExpenses = () => {
         if (!isFormValid.value) {

@@ -185,21 +185,7 @@ const handleFileUpload = (event) => {
     alert('Please upload an image file.');
   }
 };
-  const handleSubmit = () => {
-   if(files.value){
-    const formData = new FormData();
-    formData.append(`YOUR_KEY`, files.value);
-   
-    fetch('YOUR_ENDPOINT_URL', {
-        method: 'POST',
-        body: formData,
-    })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
-      }
-   }
-
+ 
 
 
 const user = computed(() => authStore.user);
