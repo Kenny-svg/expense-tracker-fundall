@@ -22,10 +22,10 @@ const login = async (values) => {
         const response = await authStore.login(values);
             notify({
               title: "Success",
-              text: "Registration successful",
+              text: "You are logged in!",
               type: "success",
             });
-            router.push('/expenditure');
+            router.push('/dashboard');
 
       } catch (error) {
         notify({
