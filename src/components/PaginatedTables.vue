@@ -56,14 +56,6 @@ const nextPage = () => {
 const previousPage = () => {
   if (currentPage.value > 1) currentPage.value--;
 };
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-NG', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  }).format(date);
-};
 
 </script>
 
@@ -84,7 +76,7 @@ const formatDate = (dateString) => {
             <tbody>
               <tr v-for="(expense, index) in paginatedExpenses" :key="expense.id" class="bg-white border-b">
             <td><div class="bg-primary rounded-full h-3 w-3 "></div></td>
-            <td class="py-4 px-6">{{ formatDate(expense.date) }}</td>
+            <td class="py-4 px-6">21 Feb, 2024</td>
                 <td class="py-4 px-6 text-primary">{{ new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(expense.amount) }}</td>
 
               </tr>

@@ -187,10 +187,10 @@ const user = computed(() => authStore.user);
 </script>
 
 <template>
-  <div class="md:h-screen flex items-center justify-center pb-10 pt-20 my-20 ">
+  <div class="lg:h-screen flex items-center justify-center pb-10 pt-20 my-20 ">
     <Container>
-      <div class="grid grid-cols-1 md:grid-cols-2">
-        <div class="mt-20 hidden md:block">
+      <div class="grid grid-cols-1 lg:grid-cols-2">
+        <div class="mt-20 hidden lg:block">
             <div class="flex gap-5">
                 <div class="flex flex-col justify-center items-center">
     <!-- Upload container -->
@@ -215,7 +215,7 @@ const user = computed(() => authStore.user);
             <div class="mt-10">
                 <h1 class="text-xl text-[#30443C]">Target Monthly Expenses</h1>
                 <h2 class="font-bold text-[#30443C] mt-4 text-xl">&#8358;<span>{{adjustedTargetExpenses }}</span></h2>
-                <div class="w-full md:w-[70%] bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
+                <div class="w-full lg:w-[70%] bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
   <div  :style="{ width: fillPercentage + '%' }" class="bg-primary text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-l-full"></div>
 </div>
 
@@ -233,7 +233,7 @@ const user = computed(() => authStore.user);
               <p class="text-sm text-[#30443C]">Now, let’s get your expenses for this month</p>
             </div>
             <div>
-              <img :src="DashboardPic" class=" absolute md:block hidden right-2 -mt-10 w-34 h-24" />
+              <img :src="DashboardPic" class=" absolute lg:block hidden right-2 -mt-10 w-34 h-24" />
             </div>
           </div>
           <div>
@@ -340,25 +340,40 @@ const user = computed(() => authStore.user);
         <span class="font-bold">Total Actual Expenses: &#x20A6;</span><input class="w-[20%]" :value="totalExpenses" readonly type="text" />
       </div>
       <div class="flex justify-center">
-          <button @click="saveExpenses" class="bg-primary font-bold px-4 py-1 rounded-md mt-4">SAVE TODAY’S EXPENSES</button>
+          <button @click="saveExpenses" class="bg-primary font-bold px-4 py-1 rounded-lg mt-4">SAVE TODAY’S EXPENSES</button>
       </div>
             </Form>
           </div>
         </div>
-        <div class="mt-20 md:hidden block">
+        <div class="mt-20 lg:hidden block">
             <div class="flex gap-5">
-                <div class="bg-gray-300 p-8 rounded-lg">A1</div>
-                <div>
+                <div class="flex flex-col justify-center items-center">
+    <!-- Upload container -->
+    <label class="bg-gray-300 p-8 rounded-lg cursor-pointer relative overflow-hidden">
+      <!-- Conditionally display upload instructions or the image -->
+      <div v-if="!imageSrc" class="absolute inset-0 flex flex-col justify-center items-center">
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+</svg>
+</span>
+      </div>
+      <img v-if="imageSrc" :src="imageSrc" class="absolute inset-0 w-full h-full object-cover" alt="Uploaded image preview" />
+      <input type="file" class="hidden" @change="handleFileUpload" accept="image/*" />
+    </label>
+  </div>
+
+                        <div>
                     <h1 class="text-xl text-[#30443C] font-bold">{{user?.firstname}} {{ user?.lastname }}</h1>
                     <h2>{{ user?.email }}</h2>
                 </div>
             </div>
             <div class="mt-10">
                 <h1 class="text-xl text-[#30443C]">Target Monthly Expenses</h1>
-                <h2 class="font-bold text-[#30443C]">789,000</h2>
-            <div class="w-full md:w-[70%] bg-gray-200 rounded-full dark:bg-gray-700">
-            <div class="bg-primary text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-l-full" style="width: 30%"></div>
-            </div>
+                <h2 class="font-bold text-[#30443C] mt-4 text-xl">&#8358;<span>{{adjustedTargetExpenses }}</span></h2>
+                <div class="w-full lg:w-[70%] bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
+  <div  :style="{ width: fillPercentage + '%' }" class="bg-primary text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-l-full"></div>
+</div>
+
             
         </div>
         <div class="flex justify-sart mt-4">
