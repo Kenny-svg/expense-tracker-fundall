@@ -9,16 +9,11 @@ import { useAuthStore } from '../store/authStore'
 import Datepicker from 'vue3-datepicker'
 
 import { useExpensesStorage } from "../compossables/useExpensesStorage"
-import { notify } from '@kyvg/vue3-notification';
 
 
 const maximumTargetExpense = 1000000;
 const expensesData = ref({}); 
-const targetExpenses = ref(''); 
-const actualExpenses = computed(() => {
-  return parseFloat(totalExpenses.value.replace(/,/g, '')) || 0;
-});
-const targetExpensesNumeric = computed(() => parseFloat(targetExpenses.value.replace(/,/g, '')) || 0);
+
 
 const fillPercentage = computed(() => {
   const targetExpensesNumeric = parseFloat(expensesData.value?.targetExpenses?.replace(/,/g, '') || 0);
@@ -28,10 +23,9 @@ const fillPercentage = computed(() => {
 
 
 
-const {remainingTargetExpenses, picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses } = useExpensesStorage();
+const {picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses } = useExpensesStorage();
 
 
-const isLoggedIn = computed(() => authStore.status.loggedIn);
 
 const storedDataString = sessionStorage.getItem('savedExpenses'); 
 const adjustedTargetExpenses = computed(() => {

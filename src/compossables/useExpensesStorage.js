@@ -1,6 +1,5 @@
 import { ref,watch, computed, onMounted } from 'vue';
 import { notify } from "@kyvg/vue3-notification";
-import { useRouter } from 'vue-router';
 
 export function useExpensesStorage() {
   const picked = ref(new Date());
@@ -55,10 +54,8 @@ export function useExpensesStorage() {
     targetExpensesNumeric = Math.max(0, targetExpensesNumeric - totalExpensesNumeric);
   
     let savedTargetExpenses = existingData.targetExpenses ? existingData.targetExpenses : targetExpensesNumeric;
-    let savedDate = existingData.date ? existingData.date : formattedPickedDate.value;
   
     totalExpensesNumeric += existingData.totalExpenses ? parseFloat(existingData.totalExpenses.replace(/,/g, '')) : 0;
-const remainingTargetExpenses = savedTargetExpenses - totalExpensesNumeric;
 if (totalExpenses <= formattedTargetExpenses.value) {
     formattedTargetExpenses = formattedTargetExpenses.value - totalExpenses
 }
@@ -91,9 +88,7 @@ if (totalExpenses <= formattedTargetExpenses.value) {
       type: "success",
     });
   
-    // Reload or update UI as needed
     formattedTargetExpenses.value = targetExpensesNumeric.toString();
-    // window.location.reload();
   };
   
   
