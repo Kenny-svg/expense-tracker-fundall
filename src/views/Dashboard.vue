@@ -12,7 +12,8 @@ import { useExpensesStorage } from "../compossables/useExpensesStorage"
 import { notify } from '@kyvg/vue3-notification';
 
 
-const maximumTargetExpense = 100000;
+const maximumTargetExpense = 1000000;
+const expensesData = ref({}); 
 const targetExpenses = ref(''); 
 const actualExpenses = computed(() => {
   return parseFloat(totalExpenses.value.replace(/,/g, '')) || 0;
@@ -20,7 +21,7 @@ const actualExpenses = computed(() => {
 const targetExpensesNumeric = computed(() => parseFloat(targetExpenses.value.replace(/,/g, '')) || 0);
 
 const fillPercentage = computed(() => {
-  const targetExpensesNumeric = parseFloat(expensesData.value?.targetExpenses.replace(/,/g, '') || 0);
+  const targetExpensesNumeric = parseFloat(expensesData.value?.targetExpenses?.replace(/,/g, '') || 0);
   const percentage = (targetExpensesNumeric / maximumTargetExpense) * 100;
   return Math.min(percentage, 100);
 });
@@ -32,10 +33,15 @@ const {remainingTargetExpenses, picked, formattedTargetExpenses, expenseItem2, e
 
 
 const isLoggedIn = computed(() => authStore.status.loggedIn);
-const expensesData = ref({}); 
 
 const storedDataString = sessionStorage.getItem('savedExpenses'); 
 console.log('Stored Data String:', storedDataString); // Logging the retrieved string
+const adjustedTargetExpenses = computed(() => {
+  const target = parseFloat(expensesData.value?.targetExpenses?.replace(/,/g, '') || 0);
+  const actual = parseFloat(totalExpenses.value.replace(/,/g, '') || 0);
+  // Adjust target based on actual expenses if needed
+  return target >= actual ? (target - actual).toLocaleString() : target.toLocaleString();
+});
 
 
 if (storedDataString) {
@@ -65,7 +71,7 @@ const onBlur = (fieldName) => {
 const labelColor = (fieldName) => inputFocus[fieldName] ? "#4CE895" : "";
 
 const schema = yup.object().shape({
-  targetExpenses: yup.string().required("Target Monthly Expenses is required"),
+//   targetExpenses: yup.string().required("Target Monthly Expenses is required"),
   date: yup.string().required("Date is required"),
 });
 
@@ -215,7 +221,7 @@ const user = computed(() => authStore.user);
             </div>
             <div class="mt-10">
                 <h1 class="text-xl text-[#30443C]">Target Monthly Expenses</h1>
-                <h2 class="font-bold text-[#30443C] mt-4 text-xl">&#8358;<span>{{ expensesData?.targetExpenses }}</span></h2>
+                <h2 class="font-bold text-[#30443C] mt-4 text-xl">&#8358;<span>{{adjustedTargetExpenses }}</span></h2>
                 <div class="w-full md:w-[70%] bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
   <div  :style="{ width: fillPercentage + '%' }" class="bg-primary text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-l-full"></div>
 </div>
@@ -247,7 +253,6 @@ const user = computed(() => authStore.user);
                   @focus="() => onFocus('targetExpenses')"
                   @blur="() => onBlur('targetExpenses')"
                   placeholder="123,456"
-                  v-model="formattedTargetExpenses"
                   name="targetExpenses"
                   type="tel"
                   class="border border-secondary text-[#30443C] text-sm rounded focus:ring-primary focus:border-primary block w-[75%] mt-2 p-2.5"

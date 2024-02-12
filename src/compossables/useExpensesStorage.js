@@ -33,10 +33,11 @@ export function useExpensesStorage() {
     
     return total.toLocaleString();
   });
+
   
 
   const saveExpenses = () => {
-    const targetExpensesNumeric = parseFloat(formattedTargetExpenses.value.replace(/,/g, ''));
+    let targetExpensesNumeric = parseFloat(formattedTargetExpenses.value.replace(/,/g, ''));
     let totalExpensesNumeric = parseFloat(totalExpenses.value.replace(/,/g, ''));
     
     if (!isFormValid.value) {
@@ -50,12 +51,17 @@ export function useExpensesStorage() {
   
     const existingDataRaw = sessionStorage.getItem('savedExpenses');
     let existingData = existingDataRaw ? JSON.parse(existingDataRaw) : {};
+
+    targetExpensesNumeric = Math.max(0, targetExpensesNumeric - totalExpensesNumeric);
   
     let savedTargetExpenses = existingData.targetExpenses ? existingData.targetExpenses : targetExpensesNumeric;
     let savedDate = existingData.date ? existingData.date : formattedPickedDate.value;
   
     totalExpensesNumeric += existingData.totalExpenses ? parseFloat(existingData.totalExpenses.replace(/,/g, '')) : 0;
 const remainingTargetExpenses = savedTargetExpenses - totalExpensesNumeric;
+if (totalExpenses <= formattedTargetExpenses.value) {
+    formattedTargetExpenses = formattedTargetExpenses.value - totalExpenses
+}
 
     if (savedTargetExpenses < totalExpensesNumeric) {
       notify({
@@ -67,14 +73,14 @@ const remainingTargetExpenses = savedTargetExpenses - totalExpensesNumeric;
     }
   
     const expensesDataToSave = {
-      date: savedDate,
-      targetExpenses: savedTargetExpenses.toString(),
+        date: formattedPickedDate.value,
+        targetExpenses: targetExpensesNumeric.toString(),
       expenses: [...(existingData.expenses || []), ...[
         { item: 'Item 1', amount: expenseItem2.value },
         { item: 'Item 2', amount: expenseItem4.value },
         { item: 'Item 3', amount: expenseItem6.value }
       ]],
-      totalExpenses: totalExpensesNumeric.toString()
+        totalExpenses: (existingData.totalExpenses ? parseFloat(existingData.totalExpenses) : 0 + totalExpensesNumeric).toString(),
     };
   
     sessionStorage.setItem('savedExpenses', JSON.stringify(expensesDataToSave));
@@ -86,7 +92,8 @@ const remainingTargetExpenses = savedTargetExpenses - totalExpensesNumeric;
     });
   
     // Reload or update UI as needed
-    window.location.reload();
+    formattedTargetExpenses.value = targetExpensesNumeric.toString();
+    // window.location.reload();
   };
   
   
@@ -106,7 +113,7 @@ const remainingTargetExpenses = savedTargetExpenses - totalExpensesNumeric;
     if (existingDataRaw) {
       const existingData = JSON.parse(existingDataRaw);
       if (existingData.targetExpenses !== undefined) {
-        formattedTargetExpenses.value = existingData.targetExpenses.toString();
+        formattedTargetExpenses.value = existingData.targetExpenses.toString(); 
       }
       if (existingData.date) {
         picked.value = new Date(existingData.date);
@@ -120,4 +127,3 @@ const remainingTargetExpenses = savedTargetExpenses - totalExpensesNumeric;
 
   return { picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses,};
 }
-

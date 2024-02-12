@@ -89,6 +89,7 @@ export const useAuthStore = defineStore('auth', {
       
             try {
               const response = await apiClient.post('/base/expense', payload);
+              return response;
             } catch (error) {
               console.error('Failed to send expenses data:', error);
               throw error;
