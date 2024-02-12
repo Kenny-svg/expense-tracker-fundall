@@ -63,6 +63,7 @@ const previousPage = () => {
 <template>
     <div class="flex w-full md:w-[70%]">
       <div class="border shadow-custom w-full mt-5 mx-auto p-4 ">
+        <h2 class="font-bold text-sm">Daily Expenses Summary</h2>
         <!-- Expenses Table -->
         <div class="overflow-x-auto relative">
           <table class="w-full text-sm text-left">
