@@ -18,13 +18,9 @@ const actualExpenses = computed(() => {
 });
 const targetExpensesNumeric = computed(() => parseFloat(targetExpenses.value.replace(/,/g, '')) || 0);
 
-// Assuming expensesData.targetExpenses is something like "5000" (string)
 const fillPercentage = computed(() => {
-  // Convert the target expenses to a numeric value
   const targetExpensesNumeric = parseFloat(expensesData.value?.targetExpenses.replace(/,/g, '') || 0);
-  // Calculate the percentage of the maximum target expense
   const percentage = (targetExpensesNumeric / maximumTargetExpense) * 100;
-  // Ensure the percentage does not exceed 100%
   return Math.min(percentage, 100);
 });
 
@@ -35,20 +31,18 @@ const { picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem
 
 
 const isLoggedIn = computed(() => authStore.status.loggedIn);
-const expensesData = ref({}); // Initialize your reactive variable
+const expensesData = ref({}); 
 
-const storedDataString = sessionStorage.getItem('savedExpenses'); // Retrieve the string from sessionStorage
+const storedDataString = sessionStorage.getItem('savedExpenses'); 
 console.log('Stored Data String:', storedDataString); // Logging the retrieved string
 
 if (storedDataString) {
   try {
-    // Attempt to parse the stored string into a JavaScript object
     expensesData.value = JSON.parse(storedDataString);
   } catch (error) {
     // Log error if parsing fails
     console.error('Error parsing expenses data from sessionStorage:', error);
-    // Handle the error (e.g., resetting expensesData to default or showing an error message)
-    expensesData.value = {}; // Resetting to default if parsing fails
+    expensesData.value = {}; /
   }
 } else {
   console.log('No expenses data found in sessionStorage.');

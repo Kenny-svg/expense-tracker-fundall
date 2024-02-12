@@ -76,8 +76,7 @@ export function useExpensesStorage() {
                         expenseItem4.value.trim() !== '' &&
                         expenseItem6.value.trim() !== '' &&
                         formattedPickedDate.value.trim() !== '';
-  }, { immediate: true }); // Check validity immediately on component mount
-
+  }, { immediate: true }); 
 
 
   return { picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses,};
