@@ -37,7 +37,6 @@ export function useExpensesStorage() {
   
 
   const saveExpenses = () => {
-    // Parse values to numbers for comparison and calculations
     const targetExpensesNumeric = parseFloat(formattedTargetExpenses.value.replace(/,/g, ''));
     let totalExpensesNumeric = parseFloat(totalExpenses.value.replace(/,/g, ''));
     
@@ -50,18 +49,14 @@ export function useExpensesStorage() {
       return;
     }
   
-    // Retrieve existing data to check for previously saved target and date
     const existingDataRaw = sessionStorage.getItem('savedExpenses');
     let existingData = existingDataRaw ? JSON.parse(existingDataRaw) : {};
   
-    // If targetExpenses and date are already set, use those; otherwise, use current input
     let savedTargetExpenses = existingData.targetExpenses ? existingData.targetExpenses : targetExpensesNumeric;
     let savedDate = existingData.date ? existingData.date : formattedPickedDate.value;
   
-    // Calculate new total expenses by adding today's expenses to previously saved total expenses
     totalExpensesNumeric += existingData.totalExpenses ? parseFloat(existingData.totalExpenses.replace(/,/g, '')) : 0;
   
-    // Prevent saving if today's expenses exceed the target expenses
     if (savedTargetExpenses < totalExpensesNumeric) {
       notify({
         title: "Error",
@@ -71,7 +66,6 @@ export function useExpensesStorage() {
       return;
     }
   
-    // Prepare data object to save
     const expensesDataToSave = {
       date: savedDate,
       targetExpenses: savedTargetExpenses.toString(),
@@ -83,7 +77,6 @@ export function useExpensesStorage() {
       totalExpenses: totalExpensesNumeric.toString()
     };
   
-    // Save the updated data back to sessionStorage
     sessionStorage.setItem('savedExpenses', JSON.stringify(expensesDataToSave));
     
     notify({
