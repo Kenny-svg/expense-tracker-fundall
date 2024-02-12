@@ -124,12 +124,13 @@ const schema = yup.object().shape({
                             <span v-else>Log In</span>
                             </button>
                             <p class="text-center mt-5 mb-5">Don't have an account?<router-link to="signup" class="text-primary ">Register Here</router-link></p>
+                            <div class=" mb-4">
+                                <p class="text-secondary text-center mt-5">By clicking on Login, you agree to our <span class="text-primary"><router-link to="#">Terms & Conditions and Privacy Policy.</router-link></span></p>
+                            </div>
+                    
                             </div>
                               
                     </Form>
-                    <div class="">
-                                <p class="text-secondary text-center mt-5">By clicking on Login, you agree to our <span class="text-primary"><router-link to="#">Terms & Conditions and Privacy Policy.</router-link></span></p>
-                            </div>
                     
                   
             </div>

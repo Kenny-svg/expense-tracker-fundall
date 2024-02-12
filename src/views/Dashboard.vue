@@ -181,7 +181,7 @@ const user = computed(() => authStore.user);
 </script>
 
 <template>
-  <div class="lg:h-screen flex items-center justify-center pb-10 pt-20 my-20 ">
+  <div class="lg:h-screen flex items-center justify-center pb-10 pt-20 lg:my-24 ">
     <Container>
       <div class="grid grid-cols-1 lg:grid-cols-2">
         <div class="mt-20 hidden lg:block">
@@ -330,11 +330,11 @@ const user = computed(() => authStore.user);
         />
         <ErrorMessage class="text-red-500" name="item6" />
       </div>
-      <div class="flex gap-2 justify-end items-center mt-4">
+      <div class="flex gap-2 justify-end items-center mt-8">
         <span class="font-bold">Total Actual Expenses: &#x20A6;</span><input class="w-[20%]" :value="totalExpenses" readonly type="text" />
       </div>
       <div class="flex justify-center">
-          <button @click="saveExpenses" class="bg-primary font-bold px-4 py-1 rounded-lg mt-4">SAVE TODAY’S EXPENSES</button>
+          <button @click="saveExpenses" class="bg-primary font-bold px-4 py-1 rounded-lg mt-14">SAVE TODAY’S EXPENSES</button>
       </div>
             </Form>
           </div>

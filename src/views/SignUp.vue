@@ -190,12 +190,12 @@ const passwordsMatch = computed(() => {
                             <span v-if="isLoading">Registering...</span>
                             <span v-else>Sign up</span>
                             </button>
-                            <p class="text-center mt-5 mb-5">Already have an account?<router-link to="/login" class="text-primary ">Login Here</router-link></p>
+                            <p class="text-center mt-5 mb-5">Already have an account?<router-link to="/login" class="text-primary font-bold">Login Here</router-link></p>
                             </div>
                               
                     </Form>
-                    <div class="">
-                                <p class="text-secondary text-center mt-5">By clicking on Login, you agree to our <span class="text-primary"><router-link to="#">Terms & Conditions and Privacy Policy.</router-link></span></p>
+                    <div class="flex justify-center">
+                                <p class="text-secondary text-center w-[70%] mt-5">By clicking on Login, you agree to our <span class="text-primary"><router-link to="#">Terms & Conditions and Privacy Policy.</router-link></span></p>
                             </div>
                     
                   
