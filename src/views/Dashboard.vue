@@ -181,8 +181,18 @@ const handleFileUpload = (event) => {
     alert('Please upload an image file.');
 }
 };
-
-
+onMounted(() => {
+  const existingDataRaw = sessionStorage.getItem('savedExpenses');
+  if (existingDataRaw) {
+    const existingData = JSON.parse(existingDataRaw);
+    if (existingData.targetExpenses) {
+      formattedTargetExpenses.value = existingData.targetExpenses;
+    }
+    if (existingData.date) {
+      picked.value = new Date(existingData.date);
+    }
+  }
+});
 
 const user = computed(() => authStore.user);
 
@@ -244,6 +254,7 @@ const user = computed(() => authStore.user);
                 <label class="block mb-2 text-sm font-bold mt-7" :style="{ color: labelColor('targetExpenses') }">Target Monthly Expenses</label>
 
                 <Field
+                
                   @focus="() => onFocus('targetExpenses')"
                   @blur="() => onBlur('targetExpenses')"
                   placeholder="123,456"
