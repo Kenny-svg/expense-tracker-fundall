@@ -11,23 +11,30 @@ import Datepicker from 'vue3-datepicker'
 import { useExpensesStorage } from "../compossables/useExpensesStorage"
 
 
-
+const maximumTargetExpense = 100000;
 const targetExpenses = ref(''); 
 const actualExpenses = computed(() => {
   return parseFloat(totalExpenses.value.replace(/,/g, '')) || 0;
 });
 const targetExpensesNumeric = computed(() => parseFloat(targetExpenses.value.replace(/,/g, '')) || 0);
 
+// Assuming expensesData.targetExpenses is something like "5000" (string)
 const fillPercentage = computed(() => {
-  if (targetExpensesNumeric.value === 0) return 0; 
-  const percentage = (actualExpenses.value / targetExpensesNumeric.value) * 100;
-  return Math.min(percentage, 100); 
+  // Convert the target expenses to a numeric value
+  const targetExpensesNumeric = parseFloat(expensesData.value?.targetExpenses.replace(/,/g, '') || 0);
+  // Calculate the percentage of the maximum target expense
+  const percentage = (targetExpensesNumeric / maximumTargetExpense) * 100;
+  // Ensure the percentage does not exceed 100%
+  return Math.min(percentage, 100);
 });
+
+
 console.log(fillPercentage)
 
 const { picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses } = useExpensesStorage();
 
 
+const isLoggedIn = computed(() => authStore.status.loggedIn);
 const expensesData = ref({}); // Initialize your reactive variable
 
 const storedDataString = sessionStorage.getItem('savedExpenses'); // Retrieve the string from sessionStorage
@@ -192,7 +199,6 @@ const handleFileUpload = (event) => {
         .catch(error => console.error('Error:', error));
       }
    }
-   const isLoggedIn = computed(() => authStore.isLoggedIn);
 
 
 
@@ -228,9 +234,10 @@ const user = computed(() => authStore.user);
             <div class="mt-10">
                 <h1 class="text-xl text-[#30443C]">Target Monthly Expenses</h1>
                 <h2 class="font-bold text-[#30443C] mt-4 text-xl">&#8358;<span>{{ expensesData?.targetExpenses }}</span></h2>
-            <div class="w-full md:w-[70%] bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
-            <div  class="bg-primary text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-l-full" :style="{ width: `${fillPercentage}%` }"></div>
-            </div>
+                <div class="w-full md:w-[70%] bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
+  <div  :style="{ width: fillPercentage + '%' }" class="bg-primary text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-l-full"></div>
+</div>
+
             
         </div>
         <div class="flex justify-sart mt-4">

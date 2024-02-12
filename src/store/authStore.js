@@ -41,7 +41,6 @@ export const useAuthStore = defineStore('auth', {
           },
           async login(values) {
             this.loading = true;
-            this.isLoggedIn = true
             try {
               const response = await apiClient.post('/login', values);
               const token = response.data.success.user.access_token;
@@ -49,7 +48,6 @@ export const useAuthStore = defineStore('auth', {
               sessionStorage.setItem("userToken", token);
               this.userToken = token;
               this.status.loggedIn = true;
-              this.isLoggedIn = true
               
               apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           
