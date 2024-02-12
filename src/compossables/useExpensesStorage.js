@@ -1,7 +1,6 @@
-import { ref,watch, computed } from 'vue';
+import { ref,watch, computed, onMounted } from 'vue';
 import { notify } from "@kyvg/vue3-notification";
 import { useRouter } from 'vue-router';
-const router = useRouter()
 
 export function useExpensesStorage() {
   const picked = ref(new Date());
@@ -56,7 +55,8 @@ export function useExpensesStorage() {
     let savedDate = existingData.date ? existingData.date : formattedPickedDate.value;
   
     totalExpensesNumeric += existingData.totalExpenses ? parseFloat(existingData.totalExpenses.replace(/,/g, '')) : 0;
-  
+const remainingTargetExpenses = savedTargetExpenses - totalExpensesNumeric;
+
     if (savedTargetExpenses < totalExpensesNumeric) {
       notify({
         title: "Error",
@@ -101,7 +101,22 @@ export function useExpensesStorage() {
                         expenseItem6.value.trim() !== '' &&
                         formattedPickedDate.value.trim() !== '';
   }, { immediate: true }); 
+  const updateFromSessionStorage = () => {
+    const existingDataRaw = sessionStorage.getItem('savedExpenses');
+    if (existingDataRaw) {
+      const existingData = JSON.parse(existingDataRaw);
+      if (existingData.targetExpenses !== undefined) {
+        formattedTargetExpenses.value = existingData.targetExpenses.toString();
+      }
+      if (existingData.date) {
+        picked.value = new Date(existingData.date);
+      }
+    }
+  };
 
+  onMounted(() => {
+    updateFromSessionStorage();
+  });
 
   return { picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses,};
 }

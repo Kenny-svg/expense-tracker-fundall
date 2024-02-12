@@ -121,7 +121,7 @@ const passwordsMatch = computed(() => {
                              placeholder="Enter First Name"
                                 name="firstname"
                                 type="text"
-                                class="border border-secondary text-[#30443C] text-sm rounded focus:ring-primary focus:border-primary block w-full p-2.5"
+                                class="border border-secondary text-[#30443C] text-sm rounded focus:ring-primary focus:border-primary block w-full px-4 p-2.5"
                             />
                             <ErrorMessage class="text-red-500" name="firstname" />
                         </div>
@@ -134,7 +134,7 @@ const passwordsMatch = computed(() => {
                              placeholder="Enter Last Name"
                                 name="lastname"
                                 type="text"
-                                class=" border border-secondary text-[#30443C] text-sm rounded focus:ring-primary focus:border-primary block w-full p-2.5"
+                                class=" border border-secondary text-[#30443C] text-sm rounded focus:ring-primary focus:border-primary px-4 block w-full p-2.5"
                             />
                             <ErrorMessage class="text-red-500" name="lastname" />
                         </div>

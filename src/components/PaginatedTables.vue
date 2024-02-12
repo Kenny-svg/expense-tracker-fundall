@@ -75,7 +75,7 @@ const previousPage = () => {
             <tbody>
               <tr v-for="(expense, index) in paginatedExpenses" :key="expense.id" class="bg-white border-b">
             <td><div class="bg-primary rounded-full h-3 w-3 "></div></td>
-            <td class="py-4 px-6">{{ expense.date }}</td>
+            <td class="py-4 px-6">21 Feb, 2024</td>
                 <td class="py-4 px-6 text-primary">{{ new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(expense.amount) }}</td>
 
               </tr>

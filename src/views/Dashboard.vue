@@ -28,7 +28,7 @@ const fillPercentage = computed(() => {
 
 console.log(fillPercentage)
 
-const { picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses } = useExpensesStorage();
+const {remainingTargetExpenses, picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses } = useExpensesStorage();
 
 
 const isLoggedIn = computed(() => authStore.status.loggedIn);
@@ -181,18 +181,7 @@ const handleFileUpload = (event) => {
     alert('Please upload an image file.');
 }
 };
-onMounted(() => {
-  const existingDataRaw = sessionStorage.getItem('savedExpenses');
-  if (existingDataRaw) {
-    const existingData = JSON.parse(existingDataRaw);
-    if (existingData.targetExpenses) {
-      formattedTargetExpenses.value = existingData.targetExpenses;
-    }
-    if (existingData.date) {
-      picked.value = new Date(existingData.date);
-    }
-  }
-});
+
 
 const user = computed(() => authStore.user);
 
