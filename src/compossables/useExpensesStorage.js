@@ -1,6 +1,7 @@
 import { ref,watch, computed } from 'vue';
 import { notify } from "@kyvg/vue3-notification";
-
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 export function useExpensesStorage() {
   const picked = ref(new Date());
@@ -36,18 +37,26 @@ export function useExpensesStorage() {
   
 
   const saveExpenses = () => {
-        if (!isFormValid.value) {
-          notify({
-            title: "Failed",
-            text: "Please fill all the fields before saving.",
-            type: "error",
-          });
-          return;}
-          else {
-            window.location.reload()
-          }
-    
-    const expensesData = {
+    const targetExpensesNumeric = parseFloat(formattedTargetExpenses.value.replace(/,/g, ''));
+    const totalExpensesNumeric = parseFloat(totalExpenses.value.replace(/,/g, ''));
+  
+    if (!isFormValid.value) {
+      notify({
+        title: "Failed",
+        text: "Please fill all the fields before saving.",
+        type: "error",
+      });
+      return;
+    } else if (targetExpensesNumeric < totalExpensesNumeric) {
+      notify({
+        title: "Failed",
+        text: "Monthly Target Expense must be greater than today's expense!",
+        type: "error",
+      });
+      return;
+    }
+  
+    const expensesDataToSave = {
       date: formattedPickedDate.value,
       targetExpenses: formattedTargetExpenses.value,
       expenses: [
@@ -58,14 +67,17 @@ export function useExpensesStorage() {
       totalExpenses: totalExpenses.value
     };
     
-    sessionStorage.setItem('savedExpenses', JSON.stringify(expensesData));
+    // Saving to sessionStorage
+    sessionStorage.setItem('savedExpenses', JSON.stringify(expensesDataToSave));
     notify({
         title: "Success",
         text: "Expenses saved successfully",
         type: "success",
-      });
+    });
+  
+    window.location.reload()
   };
-
+  
 
   const isFormValid = ref(false);
 

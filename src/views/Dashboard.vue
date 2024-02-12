@@ -9,6 +9,7 @@ import { useAuthStore } from '../store/authStore'
 import Datepicker from 'vue3-datepicker'
 
 import { useExpensesStorage } from "../compossables/useExpensesStorage"
+import { notify } from '@kyvg/vue3-notification';
 
 
 const maximumTargetExpense = 100000;
@@ -36,13 +37,14 @@ const expensesData = ref({});
 const storedDataString = sessionStorage.getItem('savedExpenses'); 
 console.log('Stored Data String:', storedDataString); // Logging the retrieved string
 
+
 if (storedDataString) {
-  try {
-    expensesData.value = JSON.parse(storedDataString);
-  } catch (error) {
-    // Log error if parsing fails
+    try {
+        expensesData.value = JSON.parse(storedDataString);
+    } catch (error) {
+        // Log error if parsing fails
     console.error('Error parsing expenses data from sessionStorage:', error);
-    expensesData.value = {}; /
+    expensesData.value = {};    
   }
 } else {
   console.log('No expenses data found in sessionStorage.');
@@ -53,7 +55,7 @@ const inputFocus = reactive({
 });
 
 const onFocus = (fieldName) => {
-  inputFocus[fieldName] = true;
+    inputFocus[fieldName] = true;
 };
 
 const onBlur = (fieldName) => {
@@ -73,40 +75,40 @@ watch(formattedTargetExpenses, (newValue, oldValue) => {
   const parsedValue = parseInt(newValueWithoutCommas, 10);
   if (!isNaN(parsedValue)) {
     formattedTargetExpenses.value = parsedValue.toLocaleString();
-  }
+}
 });
 
 const authStore = useAuthStore();
 const loading = ref(true);
 
 onMounted(async () => {
-  try {
-    await authStore.getUserData();
-    loading.value = false;
-  } catch (error) {
+    try {
+        await authStore.getUserData();
+        loading.value = false;
+    } catch (error) {
     console.error('Error fetching user data:', error);
-  }
+}
 });
 
 
 
 function debounce(func, delay) {
-  let timeoutId;
+    let timeoutId;
   return function(...args) {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
+      if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
     timeoutId = setTimeout(() => {
-      func(...args);
+        func(...args);
     }, delay);
-  };
+};
 }
 
 
 
 // Function to format and update the value
 function formatAndSetValue(value, setValue) {
-  const numericValue = parseFloat(value.replace(/,/g, ''));
+    const numericValue = parseFloat(value.replace(/,/g, ''));
   if (!isNaN(numericValue)) {
     setValue(numericValue.toLocaleString());
   }
@@ -122,23 +124,23 @@ watch(expenseItem6, newValue => debouncedFormatValue6(newValue));
 
 
 const totalExpenses = computed(() => {
-  const total = [expenseItem2.value, expenseItem4.value, expenseItem6.value]
+    const total = [expenseItem2.value, expenseItem4.value, expenseItem6.value]
     .reduce((accumulator, currentValue) => {
       const parsedValue = parseFloat(currentValue.replace(/,/g, ''));
       return accumulator + (isNaN(parsedValue) ? 0 : parsedValue);
     }, 0);
-  
-  return total.toLocaleString();
+    
+    return total.toLocaleString();
 });
 function formatDate(date) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
+    if (!(date instanceof Date)) {
+        date = new Date(date);
+    }
+    
   let day = date.getDate();
   let month = date.getMonth() + 1; 
   let year = date.getFullYear().toString().substr(-2); 
-
+  
   day = day < 10 ? '0' + day : day;
   month = month < 10 ? '0' + month : month;
 
@@ -155,8 +157,8 @@ watch(formattedPickedDate, (newPicked, oldPicked) => {
     authStore.sendExpensesData(newPicked, 200)
       .then(() => {
         console.log('Data sent successfully');
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.error('Error sending data:', error);
       });
 }, { deep: true });
@@ -175,14 +177,15 @@ const handleFileUpload = (event) => {
       imageSrc.value = e.target.result;
     };
     reader.readAsDataURL(file);
-  } else {
+} else {
     alert('Please upload an image file.');
-  }
+}
 };
- 
+
 
 
 const user = computed(() => authStore.user);
+
 </script>
 
 <template>
