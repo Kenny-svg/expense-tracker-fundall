@@ -37,9 +37,10 @@ export function useExpensesStorage() {
   
 
   const saveExpenses = () => {
+    // Parse values to numbers for comparison and calculations
     const targetExpensesNumeric = parseFloat(formattedTargetExpenses.value.replace(/,/g, ''));
-    const totalExpensesNumeric = parseFloat(totalExpenses.value.replace(/,/g, ''));
-  
+    let totalExpensesNumeric = parseFloat(totalExpenses.value.replace(/,/g, ''));
+    
     if (!isFormValid.value) {
       notify({
         title: "Failed",
@@ -47,36 +48,54 @@ export function useExpensesStorage() {
         type: "error",
       });
       return;
-    } else if (targetExpensesNumeric < totalExpensesNumeric) {
+    }
+  
+    // Retrieve existing data to check for previously saved target and date
+    const existingDataRaw = sessionStorage.getItem('savedExpenses');
+    let existingData = existingDataRaw ? JSON.parse(existingDataRaw) : {};
+  
+    // If targetExpenses and date are already set, use those; otherwise, use current input
+    let savedTargetExpenses = existingData.targetExpenses ? existingData.targetExpenses : targetExpensesNumeric;
+    let savedDate = existingData.date ? existingData.date : formattedPickedDate.value;
+  
+    // Calculate new total expenses by adding today's expenses to previously saved total expenses
+    totalExpensesNumeric += existingData.totalExpenses ? parseFloat(existingData.totalExpenses.replace(/,/g, '')) : 0;
+  
+    // Prevent saving if today's expenses exceed the target expenses
+    if (savedTargetExpenses < totalExpensesNumeric) {
       notify({
-        title: "Failed",
-        text: "Monthly Target Expense must be greater than today's expense!",
+        title: "Error",
+        text: "Total expenses exceed the target monthly expenses.",
         type: "error",
       });
       return;
     }
   
+    // Prepare data object to save
     const expensesDataToSave = {
-      date: formattedPickedDate.value,
-      targetExpenses: formattedTargetExpenses.value,
-      expenses: [
+      date: savedDate,
+      targetExpenses: savedTargetExpenses.toString(),
+      expenses: [...(existingData.expenses || []), ...[
         { item: 'Item 1', amount: expenseItem2.value },
         { item: 'Item 2', amount: expenseItem4.value },
         { item: 'Item 3', amount: expenseItem6.value }
-      ],
-      totalExpenses: totalExpenses.value
+      ]],
+      totalExpenses: totalExpensesNumeric.toString()
     };
-    
-    // Saving to sessionStorage
+  
+    // Save the updated data back to sessionStorage
     sessionStorage.setItem('savedExpenses', JSON.stringify(expensesDataToSave));
+    
     notify({
-        title: "Success",
-        text: "Expenses saved successfully",
-        type: "success",
+      title: "Success",
+      text: "Expenses saved successfully.",
+      type: "success",
     });
   
-    window.location.reload()
+    // Reload or update UI as needed
+    window.location.reload();
   };
+  
   
 
   const isFormValid = ref(false);
