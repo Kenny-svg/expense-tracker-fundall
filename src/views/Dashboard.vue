@@ -27,7 +27,6 @@ const fillPercentage = computed(() => {
 });
 
 
-console.log(fillPercentage)
 
 const {remainingTargetExpenses, picked, formattedTargetExpenses, expenseItem2, expenseItem4, expenseItem6, saveExpenses } = useExpensesStorage();
 
@@ -35,11 +34,9 @@ const {remainingTargetExpenses, picked, formattedTargetExpenses, expenseItem2, e
 const isLoggedIn = computed(() => authStore.status.loggedIn);
 
 const storedDataString = sessionStorage.getItem('savedExpenses'); 
-console.log('Stored Data String:', storedDataString); // Logging the retrieved string
 const adjustedTargetExpenses = computed(() => {
   const target = parseFloat(expensesData.value?.targetExpenses?.replace(/,/g, '') || 0);
   const actual = parseFloat(totalExpenses.value.replace(/,/g, '') || 0);
-  // Adjust target based on actual expenses if needed
   return target >= actual ? (target - actual).toLocaleString() : target.toLocaleString();
 });
 
@@ -53,7 +50,6 @@ if (storedDataString) {
     expensesData.value = {};    
   }
 } else {
-  console.log('No expenses data found in sessionStorage.');
 }
 const inputFocus = reactive({
   targetExpenses: false,
@@ -157,12 +153,9 @@ const formattedPickedDate = computed(() => formatDate(picked.value));
 
 
 watch(formattedPickedDate, (newPicked, oldPicked) => {
-    console.log('Date picked:', newPicked);
-    console.log(totalExpenses.value)
   
     authStore.sendExpensesData(newPicked, 200)
       .then(() => {
-        console.log('Data sent successfully');
     })
     .catch((error) => {
         console.error('Error sending data:', error);
