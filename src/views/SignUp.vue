@@ -101,7 +101,7 @@ const passwordsMatch = computed(() => {
 <template>
     <div class="md:h-screen flex items-center justify-center my-0 pb-10 pt-20 md:my-20">
     <Container>
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-2 items-center ">
+        <div class="grid grid-cols-1 gap-10 mt-14 lg:mt-0 md:grid-cols-2 items-center ">
             <div class="hidden md:flex items-center justify-center">
                 <div class="w-full md:w-[55%]">
                     <img class="md:w-[60%] mt-20 mx-auto" :src="MainPageIcon" />
@@ -111,7 +111,7 @@ const passwordsMatch = computed(() => {
             </div>
             <div class="">
                 <Form @submit="signUp" :validation-schema="schema" class="border md:mt-0 mt-2 h-auto pt-8 items-center justify-center flex shadow-custom flex-col rounded">
-                    <div class="w-[80%] ">
+                    <div class="lg:w-[80%] w-[90%] ">
                     <div class="flex gap-10 mb-6">
                         <div>
                             <label class="block mb-2 text-sm font-bold" :style="{ color: labelColor('firstname') }">First Name</label>

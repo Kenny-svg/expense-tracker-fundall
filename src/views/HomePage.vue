@@ -14,9 +14,9 @@ import Container from "../components/Container.vue"
                 </header>
                 <main class="flex justify-between items-center flex-col py-14">
                     <img class="md:w-[14%]" :src="MainPageIcon" />
-                    <h1 class="mt-14 font-bold text-2xl">Fundall Expense Tracker</h1>
-                    <p class="text-xl mt-2 font-bold">Mini Project Frontend</p>
-                    <p class="mt-5 font-bold">by Fagbenro Kehinde</p>
+                    <h1 class="mt-14 font-bold lg:text-2xl">Fundall Expense Tracker</h1>
+                    <p class="lg:text-xl mt-2 font-bold">Mini Project Frontend</p>
+                    <p class="mt-5 lg:text-base text-sm font-bold">by Fagbenro Kehinde</p>
                 </main>
         </Container>
     </div>

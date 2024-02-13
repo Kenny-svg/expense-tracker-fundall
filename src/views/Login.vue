@@ -73,7 +73,7 @@ const schema = yup.object().shape({
 <template>
     <div class="h-screen flex items-center justify-center pb-10 pt-10">
     <Container>
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-2 items-center ">
+        <div class="grid grid-cols-1 gap-10 mt-14 lg:mt-0 md:grid-cols-2 items-center ">
             <div class="hidden md:flex items-center justify-center">
                 <div class="w-[50%]">
                     <img class="w-[60%] mt-20 mx-auto" :src="MainPageIcon" />
@@ -83,10 +83,10 @@ const schema = yup.object().shape({
             </div>
             <div class="">
                 <Form @submit="login" :validation-schema="schema" class="border md:mt-0 mt-2 h-auto pt-8 items-center justify-center flex shadow-custom flex-col rounded">
-                    <div class="justify-center w-[80%]">
+                    <div class="justify-center w-[90%] lg:w-[80%]">
                         <h1 class="text-[#1B2420] font-bold text-xl">Holla</h1>
                         <p class="text-[#30443C]">Sign in to the vibe!</p>
-                    <div class="mb-6 mt-10">
+                    <div class="mb-6 mt-4">
                         <label :style="{ color: labelColor('email') }" class="block mb-2 text-sm font-bold"
                             >Email address</label
                         >
