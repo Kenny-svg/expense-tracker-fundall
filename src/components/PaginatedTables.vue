@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 
 const defaultExpenses = [
-  { id: 1, description: 'Groceries', amount: 95.20, date: '2024-02-01' },
+  { id: 1, description: '', amount: 0.00, date: '- - -' },
 ];
 
 const expenses = ref([]);
