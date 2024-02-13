@@ -56,9 +56,7 @@ export function useExpensesStorage() {
     let savedTargetExpenses = existingData.targetExpenses ? existingData.targetExpenses : targetExpensesNumeric;
   
     totalExpensesNumeric += existingData.totalExpenses ? parseFloat(existingData.totalExpenses.replace(/,/g, '')) : 0;
-if (totalExpenses <= formattedTargetExpenses.value) {
-    formattedTargetExpenses = formattedTargetExpenses.value - totalExpenses
-}
+
 
     if (savedTargetExpenses < totalExpensesNumeric) {
       notify({
@@ -89,6 +87,7 @@ if (totalExpenses <= formattedTargetExpenses.value) {
     });
   
     formattedTargetExpenses.value = targetExpensesNumeric.toString();
+    window.location.reload()
   };
   
   

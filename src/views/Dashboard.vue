@@ -240,6 +240,7 @@ const user = computed(() => authStore.user);
                   @focus="() => onFocus('targetExpenses')"
                   @blur="() => onBlur('targetExpenses')"
                   placeholder="123,456"
+                  v-model="formattedTargetExpenses"
                   name="targetExpenses"
                   type="tel"
                   class="border border-secondary text-[#30443C] text-sm rounded focus:ring-primary focus:border-primary block w-[75%] mt-2 p-2.5"
@@ -331,7 +332,7 @@ const user = computed(() => authStore.user);
         <ErrorMessage class="text-red-500" name="item6" />
       </div>
       <div class="flex gap-2 justify-end items-center mt-8">
-        <span class="font-bold">Total Actual Expenses: &#x20A6;</span><input class="w-[20%]" :value="totalExpenses" readonly type="text" />
+        <span class="font-bold">Total Actual Expenses: &#x20A6;</span><input class="w-1/2 lg:w-[20%]" :value="totalExpenses" readonly type="text" />
       </div>
       <div class="flex justify-center">
           <button @click="saveExpenses" class="bg-primary font-bold px-4 py-1 rounded-lg mt-14">SAVE TODAY’S EXPENSES</button>
