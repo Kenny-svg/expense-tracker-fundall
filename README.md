@@ -1,10 +1,10 @@
 # Vue 3 + Vite
 
-NPM Install
+NPM / YARN Install
 
-NPM run dev
+NPM / YARN run dev
 
-NPM run build
+NPM / YARN run build
 
 ## Recommended IDE Setup
 
